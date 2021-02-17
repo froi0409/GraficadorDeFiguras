@@ -1,0 +1,75 @@
+import java_cup.runtime.*;
+
+parser code {:
+
+    public parser(GraficadorLex lex) {
+        super(lex);
+    }
+    public void report_error(String message, Object info) {
+        System.out.println("reporterror");
+    }
+    public void report_fatal_error(String message, Object info) {
+        System.out.println("reportfatal");
+    }
+    public void syntax_error(Symbol cur_token) {
+        System.out.println("syntaxerr" + symbl_name_from_id(cur_token.sym));
+    }
+
+:}
+
+terminal GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, PARA, PARC, COM, ANIMAR, OBJETO, ANTERIOR, TIPOANIMACION, NUMERO, SIGSUMA, SIGMENOS, SIGMULTIPLICACION, SIGDIVISION, COLOR;
+non terminal texto, instruccion, graficacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis, animacion, reglaAnimacion, suma, sumap, multiplicacion, multiplicacionp, unario, elemento;
+
+texto ::=   instruccion texto
+            |
+            ;
+
+instruccion ::= graficacion
+                | graficacion animacion
+                ;
+
+graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro
+                | GRAFICAR CUADRADO reglaGraficacionCuatro
+                | GRAFICAR RECTANGULO reglaGraficacionCinco
+                | GRAFICAR LINEA reglaGraficacionCinco
+                | GRAFICAR POLIGONO reglaGraficacionSeis
+                ;
+
+reglaGraficacionCuatro ::=      PARA suma COM suma COM suma COM COLOR PARC
+                                ;
+
+reglaGraficacionCinco ::=       PARA suma COM suma COM suma COM suma COLOR PARC
+                                ;
+
+reglaGraficacionSeis ::=        PARA suma COM suma COM suma COM suma COM suma COM COLOR PARC
+                                ;
+
+animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
+                ;
+
+reglaAnimacion ::=  suma COM suma COM TIPOANIMACION
+                    ;
+
+suma ::=    multiplicacion sumap
+            ;
+
+sumap ::=   SIGSUMA multiplicacion sumap
+            | SIGMENOS multiplicacion sumap
+            |
+            ;
+
+multiplicacion ::=  unario multiplicacionp
+                    ;
+
+multiplicacionp ::= SIGMULTIPLICACION unario multiplicacionp
+                    | SIGDIVISION unario multiplicacionp
+                    |
+                    ;
+
+unario ::=  SIGMENOS elemento
+            | elemento
+            ;
+
+elemento ::=    NUMERO
+                | PARA suma PARC
+                ;
