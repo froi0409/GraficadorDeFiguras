@@ -1,9 +1,20 @@
 import java_cup.runtime.*;
+import java.util.ArrayList;
+import com.froi.graficador.lexer.*;
+import com.froi.graficador.entidades.*;
 
 parser code {:
 
+    private ArrayList<Figura> graficaciones;
+    private ArrayList<String> errores;
+    private int valor1,valor2,valor3,valor4,valor5;
+    private String colorF;
+
     public parser(GraficadorLex lex) {
         super(lex);
+        //Desclaramos las listas que utilizaremos
+        graficaciones = new ArrayList<>();
+        errores = new ArrayList<>();
     }
     public void report_error(String message, Object info) {
         System.out.println("reporterror");
@@ -15,10 +26,18 @@ parser code {:
         System.out.println("syntaxerr" + symbl_name_from_id(cur_token.sym));
     }
 
+    //Obtenemos las listas
+    public ArrayList<Figura> getGraficaciones() {
+        return graficaciones;
+    }
+    public ArrayList<String> getErrores() {
+        return errores;
+    }
+
 :}
 
 terminal GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, PARA, PARC, COM, ANIMAR, OBJETO, ANTERIOR, TIPOANIMACION, NUMERO, SIGSUMA, SIGMENOS, SIGMULTIPLICACION, SIGDIVISION, COLOR;
-non terminal texto, instruccion, graficacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis, animacion, reglaAnimacion, suma, sumap, multiplicacion, multiplicacionp, unario, elemento;
+non terminal texto, instruccion, graficacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis, animacion, reglaAnimacion, valor, suma, sumap, multiplicacion, multiplicacionp, unario, elemento;
 
 texto ::=   instruccion texto
             |
@@ -28,20 +47,20 @@ instruccion ::= graficacion
                 | graficacion animacion
                 ;
 
-graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro
-                | GRAFICAR CUADRADO reglaGraficacionCuatro
-                | GRAFICAR RECTANGULO reglaGraficacionCinco
-                | GRAFICAR LINEA reglaGraficacionCinco
-                | GRAFICAR POLIGONO reglaGraficacionSeis
+graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro {: graficaciones.add(new Circulo(valor1, valor2, valor3, colorF)); :}
+                | GRAFICAR CUADRADO reglaGraficacionCuatro {: graficaciones.add(new Cuadrado(valor1, valor2, valor3, colorF)); :}
+                | GRAFICAR RECTANGULO reglaGraficacionCinco {: graficaciones.add(new Rectangulo(valor1, valor2, valor3, valor4, colorF)); :}
+                | GRAFICAR LINEA reglaGraficacionCinco {: graficaciones.add(new Linea(valor1, valor2, valor3, valor4, colorF)); :}
+                | GRAFICAR POLIGONO reglaGraficacionSeis {: graficaciones.add(new Poligono(valor1, valor2, valor3, valor4, valor5, colorF)); :}
                 ;
 
-reglaGraficacionCuatro ::=      PARA suma COM suma COM suma COM COLOR PARC
+reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:v4 PARC           {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); colorF = (String)v4; :}
                                 ;
 
-reglaGraficacionCinco ::=       PARA suma COM suma COM suma COM suma COLOR PARC
+reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COLOR:v5 PARC          {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); valor4 = Integer.valueOf((String)v4); colorF = (String)v5; :}
                                 ;
 
-reglaGraficacionSeis ::=        PARA suma COM suma COM suma COM suma COM suma COM COLOR PARC
+reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:v6 PARC         {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); valor4 = Integer.valueOf((String)v4); valor5 = Integer.valueOf((String)v5); colorF = (String)v6; :}
                                 ;
 
 animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
@@ -49,6 +68,9 @@ animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
 
 reglaAnimacion ::=  suma COM suma COM TIPOANIMACION
                     ;
+
+valor::=    suma
+            ;
 
 suma ::=    multiplicacion sumap
             ;
