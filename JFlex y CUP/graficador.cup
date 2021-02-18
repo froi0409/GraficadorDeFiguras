@@ -7,14 +7,20 @@ parser code {:
 
     private ArrayList<Figura> graficaciones;
     private ArrayList<String> errores;
-    private int valor1,valor2,valor3,valor4,valor5;
     private String colorF;
+    private int[] v;
 
     public parser(GraficadorLex lex) {
         super(lex);
         //Desclaramos las listas que utilizaremos
         graficaciones = new ArrayList<>();
         errores = new ArrayList<>();
+        v = new int[5];
+        v[0] = 0;
+        v[1] = 0;
+        v[2] = 0;
+        v[3] = 0;
+        v[4] = 0;
     }
     public void report_error(String message, Object info) {
         System.out.println("reporterror");
@@ -36,8 +42,16 @@ parser code {:
 
 :}
 
-terminal GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, PARA, PARC, COM, ANIMAR, OBJETO, ANTERIOR, TIPOANIMACION, NUMERO, SIGSUMA, SIGMENOS, SIGMULTIPLICACION, SIGDIVISION, COLOR;
-non terminal texto, instruccion, graficacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis, animacion, reglaAnimacion, valor, suma, sumap, multiplicacion, multiplicacionp, unario, elemento;
+terminal String GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, PARA, PARC, COM, ANIMAR, OBJETO, ANTERIOR, TIPOANIMACION, NUMERO, SIGSUMA, SIGMENOS, SIGMULTIPLICACION, SIGDIVISION, COLOR, UNARY;
+non terminal texto, instruccion, graficacion, animacion, reglaAnimacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis;
+non terminal Double valor;
+
+//Jerarquizamos los simbolos
+precedence left SIGSUMA, SIGMENOS;
+precedence left SIGMULTIPLICACION, SIGDIVISION;
+precedence right UNARY;
+
+start with texto;
 
 texto ::=   instruccion texto
             |
@@ -47,51 +61,34 @@ instruccion ::= graficacion
                 | graficacion animacion
                 ;
 
-graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro {: graficaciones.add(new Circulo(valor1, valor2, valor3, colorF)); :}
-                | GRAFICAR CUADRADO reglaGraficacionCuatro {: graficaciones.add(new Cuadrado(valor1, valor2, valor3, colorF)); :}
-                | GRAFICAR RECTANGULO reglaGraficacionCinco {: graficaciones.add(new Rectangulo(valor1, valor2, valor3, valor4, colorF)); :}
-                | GRAFICAR LINEA reglaGraficacionCinco {: graficaciones.add(new Linea(valor1, valor2, valor3, valor4, colorF)); :}
-                | GRAFICAR POLIGONO reglaGraficacionSeis {: graficaciones.add(new Poligono(valor1, valor2, valor3, valor4, valor5, colorF)); :}
+graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro {: graficaciones.add(new Circulo(v[0], v[1], v[2], colorF)); System.out.println("CIRCULO\n"); :}
+                | GRAFICAR CUADRADO reglaGraficacionCuatro {: graficaciones.add(new Cuadrado(v[0], v[1], v[2], colorF)); :}
+                | GRAFICAR RECTANGULO reglaGraficacionCinco {: graficaciones.add(new Rectangulo(v[0], v[1], v[2], v[3], colorF)); :}
+                | GRAFICAR LINEA reglaGraficacionCinco {: graficaciones.add(new Linea(v[0], v[1], v[2], v[3], colorF)); :}
+                | GRAFICAR POLIGONO reglaGraficacionSeis {: graficaciones.add(new Poligono(v[0], v[1], v[2], v[3], v[4], colorF)); :}
                 ;
 
-reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:v4 PARC           {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); colorF = (String)v4; :}
+reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); :}
                                 ;
 
-reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COLOR:v5 PARC          {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); valor4 = Integer.valueOf((String)v4); colorF = (String)v5; :}
+reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); :}
                                 ;
 
-reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:v6 PARC         {: valor1 = Integer.valueOf((String)v1); valor2 = Integer.valueOf((String)v2); valor3 = Integer.valueOf((String)v3); valor4 = Integer.valueOf((String)v4); valor5 = Integer.valueOf((String)v5); colorF = (String)v6; :}
+reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); v[4]=v5.intValue(); :}
                                 ;
 
 animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
                 ;
 
-reglaAnimacion ::=  suma COM suma COM TIPOANIMACION
+reglaAnimacion ::=  valor:v1 COM valor:v2 COM TIPOANIMACION
                     ;
 
-valor::=    suma
+valor::=    SIGMENOS valor:valo1                                  {: RESULT=valo1*-1; :}%prec UNARY
+            | valor:valo1 SIGSUMA              valor:valo2        {: RESULT=valo1+valo2; :}
+            | valor:valo1 SIGMENOS             valor:valo2        {: RESULT=valo1-valo2; :}
+            | valor:valo1 SIGMULTIPLICACION    valor:valo2        {: RESULT=valo1*valo2; :}
+            | valor:valo1 SIGDIVISION          valor:valo2        {: RESULT=valo1/valo2; :}
+            | NUMERO:valo1                                        {: RESULT= new Double(valo1); :}
+            | PARA valor:valo1 PARC                               {: RESULT= new Double(valo1); :}
             ;
 
-suma ::=    multiplicacion sumap
-            ;
-
-sumap ::=   SIGSUMA multiplicacion sumap
-            | SIGMENOS multiplicacion sumap
-            |
-            ;
-
-multiplicacion ::=  unario multiplicacionp
-                    ;
-
-multiplicacionp ::= SIGMULTIPLICACION unario multiplicacionp
-                    | SIGDIVISION unario multiplicacionp
-                    |
-                    ;
-
-unario ::=  SIGMENOS elemento
-            | elemento
-            ;
-
-elemento ::=    NUMERO
-                | PARA suma PARC
-                ;

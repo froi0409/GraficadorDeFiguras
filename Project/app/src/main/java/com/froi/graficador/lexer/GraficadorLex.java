@@ -97,12 +97,12 @@ public class GraficadorLex implements Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7"+
     "\1\10\1\11\1\12\12\1\21\0\1\12\25\0\1\13"+
-    "\13\0\1\14\5\0\1\15\1\0\1\16\5\0\1\17"+
-    "\5\0\1\20\3\0\1\21\4\0\1\22\1\23\1\24"+
-    "\1\25\2\0\1\26";
+    "\17\0\1\14\1\0\1\15\5\0\1\16\5\0\1\17"+
+    "\3\0\1\20\4\0\1\21\1\22\1\23\1\24\2\0"+
+    "\1\25";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[108];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -136,14 +136,14 @@ public class GraficadorLex implements Scanner {
     "\0\u0492\0\u04b0\0\u04ce\0\u04ec\0\u050a\0\u0528\0\u0546\0\u0564"+
     "\0\u0582\0\u05a0\0\u05be\0\u05dc\0\36\0\u05fa\0\u0618\0\u0636"+
     "\0\u0654\0\u0672\0\u0690\0\u06ae\0\u06cc\0\u06ea\0\u0708\0\u0726"+
-    "\0\36\0\u0744\0\u0762\0\u0780\0\u079e\0\u07bc\0\36\0\u07da"+
-    "\0\36\0\u07f8\0\u0816\0\u0834\0\u0852\0\u0870\0\36\0\u088e"+
-    "\0\u08ac\0\u08ca\0\u08e8\0\u0906\0\36\0\u0924\0\u0942\0\u0960"+
-    "\0\36\0\u097e\0\u099c\0\u09ba\0\u09d8\0\36\0\36\0\36"+
-    "\0\36\0\u09f6\0\u0a14\0\36";
+    "\0\u0744\0\u0762\0\u0780\0\u079e\0\36\0\u07bc\0\36\0\u07da"+
+    "\0\u07f8\0\u0816\0\u0834\0\u0852\0\36\0\u0870\0\u088e\0\u08ac"+
+    "\0\u08ca\0\u08e8\0\36\0\u0906\0\u0924\0\u0942\0\36\0\u0960"+
+    "\0\u097e\0\u099c\0\u09ba\0\36\0\36\0\36\0\36\0\u09d8"+
+    "\0\u09f6\0\36";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[108];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -181,21 +181,21 @@ public class GraficadorLex implements Scanner {
     "\1\70\43\0\1\71\35\0\1\72\31\0\1\73\27\0"+
     "\1\74\42\0\1\75\30\0\1\75\33\0\1\76\36\0"+
     "\1\77\53\0\1\100\21\0\1\101\34\0\1\102\31\0"+
-    "\1\103\35\0\1\104\53\0\1\105\23\0\1\106\40\0"+
-    "\1\107\45\0\1\110\32\0\1\111\24\0\1\54\41\0"+
-    "\1\112\26\0\1\113\53\0\1\114\37\0\1\115\33\0"+
-    "\1\116\17\0\1\117\44\0\1\120\26\0\1\121\40\0"+
-    "\1\105\45\0\1\122\36\0\1\75\40\0\1\123\24\0"+
-    "\1\124\27\0\1\125\46\0\1\126\42\0\1\127\26\0"+
-    "\1\130\37\0\1\131\24\0\1\132\37\0\1\133\43\0"+
-    "\1\134\41\0\1\135\35\0\1\136\34\0\1\137\33\0"+
-    "\1\105\40\0\1\140\35\0\1\141\24\0\1\142\32\0"+
-    "\1\143\35\0\1\75\50\0\1\144\30\0\1\145\45\0"+
-    "\1\146\33\0\1\147\37\0\1\150\33\0\1\151\41\0"+
-    "\1\152\26\0\1\153\40\0\1\154\6\0";
+    "\1\103\35\0\1\104\53\0\1\70\23\0\1\105\40\0"+
+    "\1\106\45\0\1\107\32\0\1\75\24\0\1\54\41\0"+
+    "\1\110\26\0\1\111\53\0\1\112\37\0\1\113\33\0"+
+    "\1\114\17\0\1\115\44\0\1\116\26\0\1\117\40\0"+
+    "\1\70\45\0\1\120\41\0\1\121\24\0\1\122\27\0"+
+    "\1\123\46\0\1\124\42\0\1\125\26\0\1\126\37\0"+
+    "\1\127\24\0\1\130\37\0\1\131\43\0\1\132\41\0"+
+    "\1\133\35\0\1\134\34\0\1\135\33\0\1\70\40\0"+
+    "\1\136\35\0\1\137\24\0\1\140\32\0\1\141\35\0"+
+    "\1\75\50\0\1\142\30\0\1\143\45\0\1\144\33\0"+
+    "\1\145\37\0\1\146\33\0\1\147\41\0\1\150\26\0"+
+    "\1\151\40\0\1\152\6\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[2610];
+    int [] result = new int[2580];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -238,12 +238,12 @@ public class GraficadorLex implements Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\11\11\13\1\21\0\1\1\25\0\1\11\13\0"+
-    "\1\11\5\0\1\11\1\0\1\11\5\0\1\11\5\0"+
-    "\1\11\3\0\1\11\4\0\4\11\2\0\1\11";
+    "\1\0\11\11\13\1\21\0\1\1\25\0\1\11\17\0"+
+    "\1\11\1\0\1\11\5\0\1\11\5\0\1\11\3\0"+
+    "\1\11\4\0\4\11\2\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[108];
+    int [] result = new int[106];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -729,112 +729,107 @@ public class GraficadorLex implements Scanner {
             { 
             }
             // fall through
-          case 23: break;
+          case 22: break;
           case 2:
             { /* Ignorar */
             }
             // fall through
-          case 24: break;
+          case 23: break;
           case 3:
-            { System.out.println("(");return new Symbol(PARA, yyline + 1, yycolumn + 1);
+            { return new Symbol(PARA, yyline + 1, yycolumn + 1);
+            }
+            // fall through
+          case 24: break;
+          case 4:
+            { return new Symbol(PARC, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 25: break;
-          case 4:
-            { System.out.println(")");return new Symbol(PARC, yyline + 1, yycolumn + 1);
-            }
-            // fall through
-          case 26: break;
           case 5:
             { return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 27: break;
+          case 26: break;
           case 6:
             { return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 28: break;
+          case 27: break;
           case 7:
-            { System.out.println("COM"); return new Symbol(COM, yyline + 1, yycolumn + 1);
+            { return new Symbol(COM, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 29: break;
+          case 28: break;
           case 8:
             { return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 30: break;
+          case 29: break;
           case 9:
             { return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 31: break;
+          case 30: break;
           case 10:
-            { System.out.println("NUM"); return new Symbol(NUMERO, yyline + 1, yycolumn + 1, yytext());
+            { return new Symbol(NUMERO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
-          case 32: break;
+          case 31: break;
           case 11:
             { return new Symbol(COLOR, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
-          case 33: break;
+          case 32: break;
           case 12:
-            { System.out.println("COLOR"); return new Symbol(COLOR, yyline + 1, yycolumn + 1, yytext());
-            }
-            // fall through
-          case 34: break;
-          case 13:
             { return new Symbol(TIPOANIMACION, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
-          case 35: break;
-          case 14:
+          case 33: break;
+          case 13:
             { return new Symbol(LINEA, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 36: break;
-          case 15:
+          case 34: break;
+          case 14:
             { return new Symbol(ANIMAR, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 37: break;
-          case 16:
+          case 35: break;
+          case 15:
             { return new Symbol(OBJETO, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 38: break;
-          case 17:
-            { System.out.println("circulo"); return new Symbol(CIRCULO, yyline + 1, yycolumn + 1);
+          case 36: break;
+          case 16:
+            { return new Symbol(CIRCULO, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 39: break;
-          case 18:
+          case 37: break;
+          case 17:
             { return new Symbol(ANTERIOR, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 40: break;
-          case 19:
+          case 38: break;
+          case 18:
             { return new Symbol(CUADRADO, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 41: break;
-          case 20:
-            { System.out.println("graficar"); return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1);
+          case 39: break;
+          case 19:
+            { return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 42: break;
-          case 21:
+          case 40: break;
+          case 20:
             { return new Symbol(POLIGONO, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 43: break;
-          case 22:
+          case 41: break;
+          case 21:
             { return new Symbol(RECTANGULO, yyline + 1, yycolumn + 1);
             }
             // fall through
-          case 44: break;
+          case 42: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
