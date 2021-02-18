@@ -20,4 +20,9 @@ public class Linea extends Figura {
         return pfy;
     }
 
+    @Override
+    public String toString() {
+        return "\nLinea\npox: " + getPox() + "\npoy: " + getPoy()  + "\npfx_ " + getPfx() + "\npfy: " + getPfy() + "\ncolor: " + getColor();
+    }
+
 }

@@ -16,7 +16,7 @@ public class Circulo extends Figura {
 
     @Override
     public String toString(){
-        return "Circulo\npox: " + getPox() + "\npoy: " + getPoy() + "\nradio: " + getRadio() + "\ncolor: " + getColor();
+        return "\nCirculo\npox: " + getPox() + "\npoy: " + getPoy() + "\nradio: " + getRadio() + "\ncolor: " + getColor();
     }
 
 }

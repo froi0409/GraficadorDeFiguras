@@ -20,4 +20,9 @@ public class Rectangulo extends Figura {
         return ancho;
     }
 
+    @Override
+    public String toString() {
+        return "\nRectangulo\npox: " + getPox() + "\npoy: " + getPoy() + "\nalto: " + getAlto()  + "\nancho: " + getAncho() + "\ncolor: " + getColor();
+    }
+
 }

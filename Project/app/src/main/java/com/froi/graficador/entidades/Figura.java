@@ -4,9 +4,12 @@ public class Figura {
 
     private int pox;
     private int poy;
+    private int pax;
+    private int pay;
     private String color;
     private boolean animacion;
     private String descripcion;
+    private String tipoAnimacion;
 
     public Figura(int pox, int poy, String color) {
         this.pox = pox;
@@ -39,4 +42,31 @@ public class Figura {
         return animacion;
     }
 
+    public void setAnimacion(boolean animacion) {
+        this.animacion = animacion;
+    }
+
+    public int getPax() {
+        return pax;
+    }
+
+    public void setPax(int pax) {
+        this.pax = pax;
+    }
+
+    public int getPay() {
+        return pay;
+    }
+
+    public void setPay(int pay) {
+        this.pay = pay;
+    }
+
+    public String getTipoAnimacion() {
+        return tipoAnimacion;
+    }
+
+    public void setTipoAnimacion(String tipoAnimacion) {
+        this.tipoAnimacion = tipoAnimacion;
+    }
 }

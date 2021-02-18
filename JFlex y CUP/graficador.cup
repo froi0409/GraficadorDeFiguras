@@ -71,7 +71,7 @@ graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro {: graficaciones.add(new
 reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); :}
                                 ;
 
-reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); :}
+reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); :}
                                 ;
 
 reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); v[4]=v5.intValue(); :}
@@ -80,7 +80,15 @@ reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valo
 animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
                 ;
 
-reglaAnimacion ::=  valor:v1 COM valor:v2 COM TIPOANIMACION
+reglaAnimacion ::=  valor:v1 COM valor:v2 COM TIPOANIMACION:animation {: 
+                                                                int lastElement = graficaciones.size()-1;
+                                                                Figura figure = graficaciones.get(lastElement);
+                                                                figure.setAnimacion(true);
+                                                                figure.setPax(v1.intValue());
+                                                                figure.setPay(v2.intValue());
+                                                                figure.setTipoAnimacion(animation);
+                                                                System.out.println("\n\n\nAnimacion en : " + figure.getPax() + "  " + figure.getPay() + "   " + figure.getTipoAnimacion() + "\n" + "Objeto a animar: " + figure + "\n\n\n");
+                                                            :}
                     ;
 
 valor::=    SIGMENOS valor:valo1                                  {: RESULT=valo1*-1; :}%prec UNARY

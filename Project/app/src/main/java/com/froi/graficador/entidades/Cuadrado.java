@@ -13,4 +13,10 @@ public class Cuadrado extends Figura {
     public int getTamaño() {
         return tamaño;
     }
+
+    @Override
+    public String toString() {
+        return "\nCuadrado\npox: " + getPox() + "\npoy: " + getPoy() + "\ntamaño: " + getTamaño() + "\ncolor: " + getColor();
+    }
+
 }

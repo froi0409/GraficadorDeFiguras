@@ -26,4 +26,8 @@ public class Poligono extends Figura {
         return lados;
     }
 
+    public String toString() {
+        return "\nPoligono\npox: " + getPox() + "\npoy: " + getPoy()  + "\nalto:_" + getAlto()+ "\nancho: " + getAncho() + "\ncolor: " + getColor();
+    }
+
 }
