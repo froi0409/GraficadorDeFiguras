@@ -2,6 +2,7 @@ package com.froi.graficador;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import com.froi.graficador.entidades.Figura;
 import com.froi.graficador.lexer.GraficadorLex;
 import com.froi.graficador.parser.parser;
 
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.ArrayList;
 
@@ -39,12 +41,25 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Figura> lista = parserPrueba.getGraficaciones();
             for(Figura element : lista){
                 System.out.println(element);
+
             }
+            recoleccionDeDatos(lista);
 
         } catch (Exception ex) {
             System.out.println(prueba);
             System.out.println("error: " + ex.getMessage());
         }
+
+
+
+    }
+
+    public void recoleccionDeDatos(ArrayList<Figura> lista) {
+
+        Intent ventanaSecundaria = new Intent(this, Plano.class);
+        ventanaSecundaria.putExtra("listaDibujos", lista);
+
+        startActivity(ventanaSecundaria);
 
     }
 

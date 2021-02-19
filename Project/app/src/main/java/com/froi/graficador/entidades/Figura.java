@@ -1,6 +1,8 @@
 package com.froi.graficador.entidades;
 
-public class Figura {
+import java.io.Serializable;
+
+public class Figura implements Serializable {
 
     private int pox;
     private int poy;

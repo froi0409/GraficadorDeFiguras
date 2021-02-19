@@ -1,5 +1,8 @@
 package com.froi.graficador.entidades;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 public class Linea extends Figura {
 
     private int pfx;
