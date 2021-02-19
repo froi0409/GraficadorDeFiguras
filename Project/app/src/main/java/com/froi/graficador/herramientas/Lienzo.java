@@ -3,11 +3,15 @@ package com.froi.graficador.herramientas;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.View;
 
 import com.froi.graficador.entidades.Circulo;
+import com.froi.graficador.entidades.Cuadrado;
 import com.froi.graficador.entidades.Figura;
 import com.froi.graficador.entidades.Linea;
+import com.froi.graficador.entidades.Poligono;
+import com.froi.graficador.entidades.Rectangulo;
 
 import java.util.ArrayList;
 
@@ -25,25 +29,41 @@ public class Lienzo extends View {
         this.listaDibujos = listaDibujos;
     }
 
+
     protected void onDraw(Canvas canvas) {
         canvas.drawARGB(100, 254, 249, 231);
         int ancho = canvas.getWidth();
         Paint brush = new Paint();
         brush.setARGB(255,0,0,0); //Le damos color al pincel
         brush.setStrokeWidth(4); //Le damos tamaño al pinncel
+
         //Foreach que nos servirá para reconocer cada dibujo
         for(Figura element : listaDibujos) {
+            setBrushColor(brush, element.getColor()); //Le damos color a la brocha
             if(element.getDescripcion().equals("CIRCULO")) {
-
+                Circulo circle = (Circulo) element;
+                canvas.drawCircle(circle.getPox(), circle.getPoy(), circle.getRadio(), brush);
             } else if (element.getDescripcion().equals("CUADRADO")) {
-
+                Cuadrado square = (Cuadrado) element;
+                int tamañoX = square.getPax() + square.getTamaño();
+                int tamañoY = square.getPay() + square.getTamaño();
+                canvas.drawRect(square.getPox(), square.getPoy(), tamañoX, tamañoY, brush);
             } else if (element.getDescripcion().equals("RECTANGULO")) {
-
+                Rectangulo rect = (Rectangulo) element;
+                int altoRect = rect.getPoy() + rect.getAlto();
+                int anchoRect = rect.getPox() + rect.getAncho();
+                canvas.drawRect(rect.getPox(), rect.getPoy(), anchoRect, altoRect, brush);
             } else if (element.getDescripcion().equals("LINEA")) {
                 Linea line = (Linea) element;
-                setBrushColor(brush, line.getColor());
                 canvas.drawLine(line.getPox(), line.getPoy(), line.getPfx(), line.getPfy(), brush);
+            } else if (element.getDescripcion().equals("POLIGONO")) {
+                Poligono polig = (Poligono) element;
+                brush.setStyle(Paint.Style.FILL);
+                Path path = new Path();
+                path.reset(); //Se hace en caso de reutilizar el path
+                System.out.println("PENDIENTE DIBUJAR POLIGONO DE N LADOS");
             }
+
         }
 
     }

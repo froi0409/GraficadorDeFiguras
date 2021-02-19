@@ -1,4 +1,5 @@
 import java_cup.runtime.*;
+import java.util.ArrayList;
 import static com.froi.graficador.lexer.sym.*;
 
 %%
@@ -10,6 +11,21 @@ import static com.froi.graficador.lexer.sym.*;
 %unicode
 %line
 %column
+
+%{
+
+private ArrayList<Advertencia> listaErrores;
+
+public GraficadorLex(java.io.Reader in, ArrayList<Advertencia> listaErrores) {
+  this.zzReader = in;
+  this.listaErrores = listaErrores;
+}
+
+public ArrayList<Advertencia> getListaErrores(){
+  return this.listaErrores;
+}
+
+%}
 
 NUM = [0-9]+ ( ['.'] [0-9]+ ) ?
 TerminacionLinea = [\r|\n|\r\n]
@@ -50,4 +66,4 @@ Ignore = {TerminacionLinea} | [ \t\f]
 
 }
 
-[^] { }
+[^] { listaErrores.add(new Advertencia(yytext(), yyline+1, yycolumn+1, "Léxico", "Símbolo no existente en el lenguaje")); }

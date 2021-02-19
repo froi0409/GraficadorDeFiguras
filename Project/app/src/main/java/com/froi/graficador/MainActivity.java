@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.froi.graficador.entidades.Advertencia;
 import com.froi.graficador.entidades.Figura;
 import com.froi.graficador.lexer.GraficadorLex;
 import com.froi.graficador.parser.parser;
@@ -31,18 +32,20 @@ public class MainActivity extends AppCompatActivity {
     public void compilacion(View view) {
 
         prueba = txtArea.getText().toString();
+        ArrayList<Advertencia> listaErrores = new ArrayList<Advertencia>();
         StringReader reader = new StringReader(prueba);
-        GraficadorLex lexico = new GraficadorLex(reader);
+        GraficadorLex lexico = new GraficadorLex(reader, listaErrores);
         parser parserPrueba = new parser(lexico);
 
         try {
             System.out.println(prueba);
             parserPrueba.parse();
             ArrayList<Figura> lista = parserPrueba.getGraficaciones();
-            for(Figura element : lista){
+            System.out.println("\n\n\nERRORES\n");
+            for(Advertencia element : listaErrores){
                 System.out.println(element);
-
             }
+
             recoleccionDeDatos(lista);
 
         } catch (Exception ex) {

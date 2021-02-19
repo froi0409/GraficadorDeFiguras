@@ -7,6 +7,7 @@ package com.froi.graficador.lexer;
 public class sym {
   /* terminals */
   public static final int LINEA = 6;
+  public static final int UNARY = 21;
   public static final int ANIMAR = 11;
   public static final int COLOR = 20;
   public static final int COM = 10;
@@ -48,7 +49,8 @@ public class sym {
   "SIGMENOS",
   "SIGMULTIPLICACION",
   "SIGDIVISION",
-  "COLOR"
+  "COLOR",
+  "UNARY"
   };
 }
 

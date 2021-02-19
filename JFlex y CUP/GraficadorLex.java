@@ -3,6 +3,7 @@
 // source: graficador.jflex
 
 import java_cup.runtime.*;
+import java.util.ArrayList;
 import static com.froi.graficador.lexer.sym.*;
 
 
@@ -318,6 +319,20 @@ public class GraficadorLex implements java_cup.runtime.Scanner {
 
   /** Whether the user-EOF-code has already been executed. */
   private boolean zzEOFDone;
+
+  /* user code: */
+
+private ArrayList<Advertencia> listaErrores;
+
+public GraficadorLex(java.io.Reader in, ArrayList<Advertencia> listaErrores) {
+  this.zzReader = in;
+  this.listaErrores = listaErrores;
+}
+
+public ArrayList<Advertencia> getListaErrores(){
+  return this.listaErrores;
+}
+
 
 
   /**
@@ -726,7 +741,7 @@ public class GraficadorLex implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { 
+            { listaErrores.add(new Advertencia(yytext(), yyline+1, yycolumn+1, "Léxico", "Símbolo no existente en el lenguaje"));
             }
             // fall through
           case 22: break;
