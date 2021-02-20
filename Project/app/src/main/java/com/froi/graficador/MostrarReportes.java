@@ -6,14 +6,22 @@ import android.icu.util.Freezable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
+
+import com.froi.graficador.entidades.Figura;
+import com.froi.graficador.reportes.ReporteColores;
+
+import java.util.ArrayList;
 
 public class MostrarReportes extends AppCompatActivity {
 
-    private FrameLayout frameOcurrencia;
-    private FrameLayout frameColores;
-    private FrameLayout frameObjetos;
-    private FrameLayout frameAnimaciones;
+    ArrayList<Figura> listaDibujos;
+
+    private ScrollView scrollOcurrencia;
+    private ScrollView scrollColores;
+    private ScrollView scrollObjetos;
+    private ScrollView scrollAnimaciones;
 
     private TableLayout tableOcurrencia;
     private TableLayout tableColores;
@@ -24,35 +32,44 @@ public class MostrarReportes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_reportes);
+
+        //Recibimos la lista de los dibujos
+        listaDibujos = (ArrayList<Figura>) getIntent().getSerializableExtra("listaDibujos");
+
         //Inicializamos los frames
-        frameOcurrencia = (FrameLayout) findViewById(R.id.frameOcurrencia);
-        frameColores = (FrameLayout) findViewById(R.id.frameColores);
-        frameObjetos = (FrameLayout) findViewById(R.id.frameObjetos);
-        frameAnimaciones = (FrameLayout) findViewById(R.id.frameAnimaciones);
+        scrollOcurrencia = (ScrollView) findViewById(R.id.scrollOcurrencia);
+        scrollColores = (ScrollView) findViewById(R.id.scrollColores);
+        scrollObjetos = (ScrollView) findViewById(R.id.scrollObjetos);
+        scrollAnimaciones = (ScrollView) findViewById(R.id.scrollAnimaciones);
         //Inicializamos los TableLayout
-        tableOcurrencia = (TableLayout) findViewById(R.id.tableOcurrencias);
+        tableOcurrencia = (TableLayout) findViewById(R.id.tableOcurrencia);
         tableColores = (TableLayout) findViewById(R.id.tableColores);
         tableObjetos = (TableLayout) findViewById(R.id.tableObjetos);
         tableAnimaciones = (TableLayout) findViewById(R.id.tableAnimaciones);
 
-        mostrarFrame(frameOcurrencia);
+        mostrarFrame(scrollOcurrencia);
+
+        tableColores.setStretchAllColumns(true);
+        tableColores.bringToFront();
+        ReporteColores reporteColores = new ReporteColores(listaDibujos);
+        reporteColores.hacerReporte(tableColores, this);
 
     }
 
     public void ocurrencias(View view) {
-        mostrarFrame(frameOcurrencia);
+        mostrarFrame(scrollOcurrencia);
     }
 
     public void coloresUsados(View view) {
-        mostrarFrame(frameColores);
+        mostrarFrame(scrollColores);
     }
 
     public void objetosUsados(View view) {
-        mostrarFrame(frameObjetos);
+        mostrarFrame(scrollObjetos);
     }
 
     public void animacionesHechas(View view) {
-        mostrarFrame(frameAnimaciones);
+        mostrarFrame(scrollAnimaciones);
     }
 
     public void regresar(View view) {
@@ -60,10 +77,10 @@ public class MostrarReportes extends AppCompatActivity {
     }
 
     private void mostrarFrame(FrameLayout frameMostrar) {
-        frameOcurrencia.setVisibility(View.GONE);
-        frameColores.setVisibility(View.GONE);
-        frameObjetos.setVisibility(View.GONE);
-        frameAnimaciones.setVisibility(View.GONE);
+        scrollOcurrencia.setVisibility(View.GONE);
+        scrollColores.setVisibility(View.GONE);
+        scrollObjetos.setVisibility(View.GONE);
+        scrollAnimaciones.setVisibility(View.GONE);
 
         frameMostrar.setVisibility(View.VISIBLE);
     }

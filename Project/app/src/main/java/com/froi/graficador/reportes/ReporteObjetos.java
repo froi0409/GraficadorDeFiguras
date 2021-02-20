@@ -1,5 +1,6 @@
 package com.froi.graficador.reportes;
 
+import android.content.Context;
 import android.widget.TableLayout;
 
 import com.froi.graficador.entidades.Figura;
@@ -18,7 +19,7 @@ public class ReporteObjetos extends ReporteNormal {
      * @param tabla TableLayout en el que se mostraran los datos
      */
     @Override
-    public void hacerReporte(TableLayout tabla) {
+    public void hacerReporte(TableLayout tabla, Context context) {
 
     }
 }

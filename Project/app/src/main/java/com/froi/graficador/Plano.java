@@ -43,6 +43,8 @@ public class Plano extends AppCompatActivity {
 
     public void mostrarReportePrueba(View view) {
         Intent reportePrueba = new Intent(this, MostrarReportes.class);
+        reportePrueba.putExtra("listaDibujos", listaDibujos);
+
         startActivity(reportePrueba);
     }
 
