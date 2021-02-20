@@ -45,8 +45,8 @@ public class Lienzo extends View {
                 canvas.drawCircle(circle.getPox(), circle.getPoy(), circle.getRadio(), brush);
             } else if (element.getDescripcion().equals("CUADRADO")) {
                 Cuadrado square = (Cuadrado) element;
-                int tamañoX = square.getPax() + square.getTamaño();
-                int tamañoY = square.getPay() + square.getTamaño();
+                int tamañoX = square.getPox() + square.getTamaño();
+                int tamañoY = square.getPoy() + square.getTamaño();
                 canvas.drawRect(square.getPox(), square.getPoy(), tamañoX, tamañoY, brush);
             } else if (element.getDescripcion().equals("RECTANGULO")) {
                 Rectangulo rect = (Rectangulo) element;

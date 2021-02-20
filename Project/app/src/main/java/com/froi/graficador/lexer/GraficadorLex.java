@@ -5,6 +5,7 @@ package com.froi.graficador.lexer;// DO NOT EDIT
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import com.froi.graficador.entidades.Advertencia;
+import com.froi.graficador.entidades.Token;
 import static com.froi.graficador.lexer.sym.*;
 
 
@@ -326,14 +327,20 @@ public class GraficadorLex implements Scanner {
 private int inicioLexema, puntero;
 private String cadenaLexica = "";
 private ArrayList<Advertencia> listaErrores;
+private ArrayList<Token> listaTokens;
 
 public GraficadorLex(java.io.Reader in, ArrayList<Advertencia> listaErrores) {
   this.zzReader = in;
   this.listaErrores = listaErrores;
+  listaTokens = new ArrayList<Token>();
 }
 
 public ArrayList<Advertencia> getListaErrores(){
   return this.listaErrores;
+}
+
+public ArrayList<Token> getListaTokens() {
+  return this.listaTokens;
 }
 
 
@@ -754,42 +761,42 @@ public ArrayList<Advertencia> getListaErrores(){
             // fall through
           case 23: break;
           case 3:
-            { return new Symbol(PARA, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token("(", yyline+1, yycolumn+1)); return new Symbol(PARA, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 24: break;
           case 4:
-            { return new Symbol(PARC, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token(")", yyline+1, yycolumn+1)); return new Symbol(PARC, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 25: break;
           case 5:
-            { return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token("*", yyline+1, yycolumn+1)); return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 26: break;
           case 6:
-            { return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token("+", yyline+1, yycolumn+1)); return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 27: break;
           case 7:
-            { return new Symbol(COM, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token(",", yyline+1, yycolumn+1));return new Symbol(COM, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 28: break;
           case 8:
-            { return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token("-", yyline+1, yycolumn+1)); return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 29: break;
           case 9:
-            { return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1);
+            { listaTokens.add(new Token("/", yyline+1, yycolumn+1)); return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1);
             }
             // fall through
           case 30: break;
           case 10:
-            { return new Symbol(NUMERO, yyline + 1, yycolumn + 1, yytext());
+            { listaTokens.add(new Token(yytext(), yyline+1, yycolumn+1)); return new Symbol(NUMERO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 31: break;
@@ -799,7 +806,7 @@ public ArrayList<Advertencia> getListaErrores(){
             // fall through
           case 32: break;
           case 12:
-            { return new Symbol(TIPOANIMACION, yyline + 1, yycolumn + 1, yytext());
+            { return new Symbol(CURVA, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 33: break;

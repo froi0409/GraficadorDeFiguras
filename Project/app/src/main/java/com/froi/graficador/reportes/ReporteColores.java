@@ -12,11 +12,8 @@ import java.util.ArrayList;
 
 public class ReporteColores extends ReporteNormal {
 
-    private ArrayList<Figura> listaDibujos;
-
     public ReporteColores(ArrayList<Figura> workList) {
         super(workList);
-        listaDibujos = workList;
     }
 
     /**
@@ -28,6 +25,12 @@ public class ReporteColores extends ReporteNormal {
     @Override
     public void hacerReporte(TableLayout tabla, Context context) {
 
+        tabla.setStretchAllColumns(true);
+        tabla.bringToFront();
+
+        TableRow.LayoutParams paramTable = new TableRow.LayoutParams();
+        paramTable.setMargins(12,20,2,20);
+
         TableRow tabRow = new TableRow(context);
         //Añadimos los títulos de la tabla
         TextView tituloColumna1 = new TextView(context);
@@ -36,9 +39,10 @@ public class ReporteColores extends ReporteNormal {
         tituloColumna1.setText("COLOR");
         tituloColumna1.setTypeface(null, Typeface.BOLD_ITALIC);
         tituloColumna2.setText("CANTIDAD DE USOS");
-        tituloColumna1.setTypeface(null, Typeface.BOLD_ITALIC);
+        tituloColumna2.setTypeface(null, Typeface.BOLD_ITALIC);
         tabRow.addView(tituloColumna1);
         tabRow.addView(tituloColumna2);
+        tabla.addView(tabRow,paramTable);
 
         TextView azul = new TextView(context); azul.setText("azul");
         TextView rojo = new TextView((context)); rojo.setText("rojo");
@@ -48,64 +52,66 @@ public class ReporteColores extends ReporteNormal {
         TextView morado = new TextView(context); morado.setText("morado");
         TextView cafe = new TextView(context); cafe.setText("cafe");
         TextView negro = new TextView(context); negro.setText("negro");
-        TextView contAzul = new TextView(context); contAzul.setText("0");
-        TextView contRojo = new TextView(context); contRojo.setText("0");
-        TextView contVerde = new TextView(context); contVerde.setText("0");
-        TextView contAmarillo = new TextView(context); contAmarillo.setText("0");
-        TextView contNaranja = new TextView(context); contNaranja.setText("0");
-        TextView contMorado = new TextView(context); contMorado.setText("0");
-        TextView contCafe = new TextView(context); contCafe.setText("0");
-        TextView contNegro = new TextView(context); contNegro.setText("0");
+        TextView contAzul = new TextView(context); contAzul.setText(repeatColor("azul"));
+        TextView contRojo = new TextView(context); contRojo.setText(repeatColor("rojo"));
+        TextView contVerde = new TextView(context); contVerde.setText(repeatColor("verde"));
+        TextView contAmarillo = new TextView(context); contAmarillo.setText(repeatColor("amarillo"));
+        TextView contNaranja = new TextView(context); contNaranja.setText(repeatColor("naranja"));
+        TextView contMorado = new TextView(context); contMorado.setText(repeatColor("morado"));
+        TextView contCafe = new TextView(context); contCafe.setText(repeatColor("cafe"));
+        TextView contNegro = new TextView(context); contNegro.setText(repeatColor("negro"));
 
         TableRow azulRow = new TableRow(context);
-        tabRow.addView(azul);
-        tabRow.addView(contAzul);
-        tabla.addView(azulRow);
+        azulRow.addView(azul);
+        azulRow.addView(contAzul);
+        tabla.addView(azulRow,paramTable);
 
         TableRow rojoRow = new TableRow(context);
-        tabRow.addView(rojo);
-        tabRow.addView(contRojo);
-        tabla.addView(rojoRow);
+        rojoRow.addView(rojo);
+        rojoRow.addView(contRojo);
+        tabla.addView(rojoRow,paramTable);
 
         TableRow verdeRow = new TableRow(context);
-        tabRow.addView(verde);
-        tabRow.addView(contVerde);
-        tabla.addView(verdeRow);
+        verdeRow.addView(verde);
+        verdeRow.addView(contVerde);
+        tabla.addView(verdeRow,paramTable);
 
         TableRow amarilloRow = new TableRow(context);
-        tabRow.addView(amarillo);
-        tabRow.addView(contAmarillo);
-        tabla.addView(amarilloRow);
+        amarilloRow.addView(amarillo);
+        amarilloRow.addView(contAmarillo);
+        tabla.addView(amarilloRow,paramTable);
 
         TableRow naranjaRow = new TableRow(context);
-        tabRow.addView(naranja);
-        tabRow.addView(contNaranja);
-        tabla.addView(naranjaRow);
+        naranjaRow.addView(naranja);
+        naranjaRow.addView(contNaranja);
+        tabla.addView(naranjaRow,paramTable);
 
         TableRow moradoRow = new TableRow(context);
-        tabRow.addView(morado);
-        tabRow.addView(contMorado);
-        tabla.addView(moradoRow);
+        moradoRow.addView(morado);
+        moradoRow.addView(contMorado);
+        tabla.addView(moradoRow,paramTable);
 
         TableRow cafeRow = new TableRow(context);
-        tabRow.addView(cafe);
-        tabRow.addView(contCafe);
-        tabla.addView(cafeRow);
+        cafeRow.addView(cafe);
+        cafeRow.addView(contCafe);
+        tabla.addView(cafeRow,paramTable);
 
         TableRow negroRow = new TableRow(context);
-        tabRow.addView(negro);
-        tabRow.addView(contNegro);
-        tabla.addView(negroRow);
+        negroRow.addView(negro);
+        negroRow.addView(contNegro);
+        tabla.addView(negroRow,paramTable);
 
     }
 
-    private int countRepeat(String cadena) {
+    private String repeatColor(String cadena) {
         int cont = 0;
+        String contador = "";
         for (Figura element: getWorkList()) {
             if(element.getColor().equals(cadena)) {
                 cont++;
             }
         }
-        return cont;
+        contador+=cont;
+        return contador;
     }
 }

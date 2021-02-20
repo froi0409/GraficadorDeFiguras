@@ -10,13 +10,18 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 
 import com.froi.graficador.entidades.Figura;
+import com.froi.graficador.entidades.Token;
+import com.froi.graficador.reportes.ReporteAnimaciones;
 import com.froi.graficador.reportes.ReporteColores;
+import com.froi.graficador.reportes.ReporteObjetos;
+import com.froi.graficador.reportes.ReporteOcurrencias;
 
 import java.util.ArrayList;
 
 public class MostrarReportes extends AppCompatActivity {
 
-    ArrayList<Figura> listaDibujos;
+    private ArrayList<Figura> listaDibujos;
+    private ArrayList<Token> listaTokens;
 
     private ScrollView scrollOcurrencia;
     private ScrollView scrollColores;
@@ -35,6 +40,8 @@ public class MostrarReportes extends AppCompatActivity {
 
         //Recibimos la lista de los dibujos
         listaDibujos = (ArrayList<Figura>) getIntent().getSerializableExtra("listaDibujos");
+        //Recibimos la lista de los tokens
+        listaTokens = (ArrayList<Token>) getIntent().getSerializableExtra("listaTokens");
 
         //Inicializamos los frames
         scrollOcurrencia = (ScrollView) findViewById(R.id.scrollOcurrencia);
@@ -48,11 +55,15 @@ public class MostrarReportes extends AppCompatActivity {
         tableAnimaciones = (TableLayout) findViewById(R.id.tableAnimaciones);
 
         mostrarFrame(scrollOcurrencia);
-
-        tableColores.setStretchAllColumns(true);
-        tableColores.bringToFront();
+        //Creamos los reportes para ser mostrados en su respectiva tabla
+        ReporteOcurrencias reporteOcurrencias = new ReporteOcurrencias(listaDibujos, listaTokens);
         ReporteColores reporteColores = new ReporteColores(listaDibujos);
+        ReporteObjetos reporteObjetos = new ReporteObjetos(listaDibujos);
+        ReporteAnimaciones reporteAnimaciones = new ReporteAnimaciones(listaDibujos);
+        reporteOcurrencias.hacerReporte(tableOcurrencia, this);
         reporteColores.hacerReporte(tableColores, this);
+        reporteObjetos.hacerReporte(tableObjetos, this);
+        reporteAnimaciones.hacerReporte(tableAnimaciones, this);
 
     }
 
@@ -76,7 +87,7 @@ public class MostrarReportes extends AppCompatActivity {
         finish();
     }
 
-    private void mostrarFrame(FrameLayout frameMostrar) {
+    private void mostrarFrame(ScrollView frameMostrar) {
         scrollOcurrencia.setVisibility(View.GONE);
         scrollColores.setVisibility(View.GONE);
         scrollObjetos.setVisibility(View.GONE);

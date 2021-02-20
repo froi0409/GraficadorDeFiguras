@@ -8,6 +8,7 @@ public class sym {
   /* terminals */
   public static final int LINEA = 6;
   public static final int UNARY = 21;
+  public static final int CURVA = 14;
   public static final int ANIMAR = 11;
   public static final int COLOR = 20;
   public static final int COM = 10;
@@ -19,7 +20,6 @@ public class sym {
   public static final int PARA = 8;
   public static final int GRAFICAR = 2;
   public static final int SIGSUMA = 16;
-  public static final int TIPOANIMACION = 14;
   public static final int EOF = 0;
   public static final int error = 1;
   public static final int NUMERO = 15;
@@ -43,7 +43,7 @@ public class sym {
   "ANIMAR",
   "OBJETO",
   "ANTERIOR",
-  "TIPOANIMACION",
+  "CURVA",
   "NUMERO",
   "SIGSUMA",
   "SIGMENOS",

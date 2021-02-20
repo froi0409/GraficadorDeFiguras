@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.froi.graficador.entidades.Figura;
+import com.froi.graficador.entidades.Token;
 import com.froi.graficador.herramientas.Lienzo;
 
 import java.security.NoSuchAlgorithmException;
@@ -42,10 +43,14 @@ public class Plano extends AppCompatActivity {
     }
 
     public void mostrarReportePrueba(View view) {
-        Intent reportePrueba = new Intent(this, MostrarReportes.class);
-        reportePrueba.putExtra("listaDibujos", listaDibujos);
+        Intent reportes = new Intent(this, MostrarReportes.class);
+        reportes.putExtra("listaDibujos", listaDibujos);
 
-        startActivity(reportePrueba);
+        //Enviamos los tokens a los reportes
+        ArrayList<Token> listaTokens = (ArrayList<Token>) getIntent().getSerializableExtra("listaTokens");
+        reportes.putExtra("listaTokens", listaTokens);
+
+        startActivity(reportes);
     }
 
     public void regresar(View view) {
