@@ -4,6 +4,7 @@
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
+import com.froi.graficador.entidades.Advertencia;
 import static com.froi.graficador.lexer.sym.*;
 
 
@@ -322,6 +323,8 @@ public class GraficadorLex implements java_cup.runtime.Scanner {
 
   /* user code: */
 
+private int inicioLexema, puntero;
+private String cadenaLexica = "";
 private ArrayList<Advertencia> listaErrores;
 
 public GraficadorLex(java.io.Reader in, ArrayList<Advertencia> listaErrores) {

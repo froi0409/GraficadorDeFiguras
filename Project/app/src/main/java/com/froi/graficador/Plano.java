@@ -3,7 +3,9 @@ package com.froi.graficador;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -35,8 +37,17 @@ public class Plano extends AppCompatActivity {
 
     }
 
-    private void recepcionDatos() throws NoSuchAlgorithmException {
+    public void recepcionDatos() throws NoSuchAlgorithmException {
         listaDibujos = (ArrayList<Figura>) getIntent().getSerializableExtra("listaDibujos");
+    }
+
+    public void mostrarReportePrueba(View view) {
+        Intent reportePrueba = new Intent(this, MostrarReportes.class);
+        startActivity(reportePrueba);
+    }
+
+    public void regresar(View view) {
+        finish();
     }
 
 }

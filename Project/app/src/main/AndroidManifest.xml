@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Graficador">
-        <activity android:name=".Plano"></activity>
+        <activity android:name=".MostrarReportes"></activity>
+        <activity android:name=".TablaReporteErrores" />
+        <activity android:name=".TablaReporteOcurrencias" />
+        <activity android:name=".Plano" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

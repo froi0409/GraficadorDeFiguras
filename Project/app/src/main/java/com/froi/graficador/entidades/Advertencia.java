@@ -1,6 +1,8 @@
 package com.froi.graficador.entidades;
 
-public class Advertencia {
+import java.io.Serializable;
+
+public class Advertencia implements Serializable {
 
     private String tipo;
     private String lexema;

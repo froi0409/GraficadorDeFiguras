@@ -19,7 +19,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private EditText txtArea;
-    public static String prueba; //prueba
+    private String entradaTexto; //prueba
+    private ArrayList<Figura> listaDibujos;
+    private ArrayList<Advertencia> listaErrores;
+    private ArrayList<String> lexemasEntrantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,42 +30,43 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         txtArea=(EditText)findViewById(R.id.txtArea);
+        lexemasEntrantes = new ArrayList<>();
     }
 
     public void compilacion(View view) {
 
-        prueba = txtArea.getText().toString();
-        ArrayList<Advertencia> listaErrores = new ArrayList<Advertencia>();
-        StringReader reader = new StringReader(prueba);
+        listaErrores = new ArrayList<Advertencia>(); //Listado de errores encontrados
+        entradaTexto = txtArea.getText().toString();
+        StringReader reader = new StringReader(entradaTexto);
+
         GraficadorLex lexico = new GraficadorLex(reader, listaErrores);
-        parser parserPrueba = new parser(lexico);
+        parser parserPrueba = new parser(lexico, listaErrores);
 
         try {
-            System.out.println(prueba);
+            System.out.println("\n\nPARSER SIN PASAR\n\n");
             parserPrueba.parse();
-            ArrayList<Figura> lista = parserPrueba.getGraficaciones();
-            System.out.println("\n\n\nERRORES\n");
-            for(Advertencia element : listaErrores){
-                System.out.println(element);
+            System.out.println("\n\nPARSER PASADO: " + listaErrores.size() +"\n\n");
+            if(listaErrores.size() > 0) {
+                // Si hubieron errores de algún tipo durante el análisis léxico o sintáctico , en vez de graficar nos tira al reporte de errores
+                Intent ventanaErrores = new Intent(this, TablaReporteErrores.class);
+                /* DEBEMOS REVISAR ESTO */
+                ventanaErrores.putExtra("listaErrores", listaErrores); //Enviamos los errores a la ventana del reporte de errores
+
+                startActivity(ventanaErrores);
+            } else {
+                //Si no hay errores durante el análisis léxico y sintáctico, nos dirigimos a la graficadora
+                listaDibujos = parserPrueba.getGraficaciones();
+                Intent ventanaSecundaria = new Intent(this, Plano.class);
+                ventanaSecundaria.putExtra("listaDibujos", listaDibujos); // Enviamos la lista de figuras a graficar
+
+                startActivity(ventanaSecundaria);
             }
 
-            recoleccionDeDatos(lista);
-
         } catch (Exception ex) {
-            System.out.println(prueba);
-            System.out.println("error: " + ex.getMessage());
+            System.out.println("error IRRECUPERABLE: " + ex.getMessage());
         }
 
 
-
-    }
-
-    public void recoleccionDeDatos(ArrayList<Figura> lista) {
-
-        Intent ventanaSecundaria = new Intent(this, Plano.class);
-        ventanaSecundaria.putExtra("listaDibujos", lista);
-
-        startActivity(ventanaSecundaria);
 
     }
 

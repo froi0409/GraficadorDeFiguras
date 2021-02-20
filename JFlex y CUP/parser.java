@@ -6,6 +6,7 @@
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import com.froi.graficador.lexer.*;
+import com.froi.graficador.entidades.Advertencia;
 import com.froi.graficador.entidades.*;
 import java_cup.runtime.XMLElement;
 
@@ -184,10 +185,11 @@ public class parser extends java_cup.runtime.lr_parser {
 
     private ArrayList<Figura> graficaciones;
     private ArrayList<String> errores;
+    private ArrayList<Advertencia> listaErrores;
     private String colorF;
     private int[] v;
 
-    public parser(GraficadorLex lex) {
+    public parser(GraficadorLex lex, ArrayList<Advertencia> listaErrores) {
         super(lex);
         //Desclaramos las listas que utilizaremos
         graficaciones = new ArrayList<>();
@@ -198,6 +200,7 @@ public class parser extends java_cup.runtime.lr_parser {
         v[2] = 0;
         v[3] = 0;
         v[4] = 0;
+        this.listaErrores = listaErrores;
     }
     public void report_error(String message, Object info) {
         System.out.println("reporterror");
@@ -212,9 +215,6 @@ public class parser extends java_cup.runtime.lr_parser {
     //Obtenemos las listas
     public ArrayList<Figura> getGraficaciones() {
         return graficaciones;
-    }
-    public ArrayList<String> getErrores() {
-        return errores;
     }
 
 
