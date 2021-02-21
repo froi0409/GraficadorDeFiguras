@@ -6,14 +6,14 @@ public class Advertencia implements Serializable {
 
     private String tipo;
     private String lexema;
-    private int linea;
-    private int columna;
+    private String linea = "";
+    private String columna = "";
     private String descripcion;
 
     public Advertencia(String lexema, int linea, int columna, String tipo, String descripcion) {
         this.lexema = lexema;
-        this.linea = linea;
-        this.columna = columna;
+        this.linea += linea;
+        this.columna += columna;
         this.tipo = tipo;
         this.descripcion = descripcion;
     }
@@ -22,4 +22,23 @@ public class Advertencia implements Serializable {
         return "Lexema: " + lexema + "  Linea: " + linea + "    Columna: " + columna + "    Tipo: " + tipo + "  Descripcion: " + descripcion + "\n";
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getLexema() {
+        return lexema;
+    }
+
+    public String getLinea() {
+        return linea;
+    }
+
+    public String getColumna() {
+        return columna;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }
