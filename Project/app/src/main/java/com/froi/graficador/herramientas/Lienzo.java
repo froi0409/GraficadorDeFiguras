@@ -60,8 +60,23 @@ public class Lienzo extends View {
                 Poligono polig = (Poligono) element;
                 brush.setStyle(Paint.Style.FILL);
                 Path path = new Path();
-                path.reset(); //Se hace en caso de reutilizar el path
-                System.out.println("PENDIENTE DIBUJAR POLIGONO DE N LADOS");
+                int numeroLados = polig.getLados();
+                double seccion = (float) (2* Math.PI / numeroLados);
+                int radio = polig.getAncho()/2;
+
+                path.reset(); // reseteamos el path
+                path.moveTo((polig.getPox() + radio *(float) Math.cos(0)), (polig.getPoy()+radio*(float)Math.sin(0)));
+
+                for (int i = 1; i < numeroLados; i++) {
+                    //obtenemos las coordenadas de los vertices del poligono
+                    float coordX = polig.getPox() + radio * (float)Math.cos(seccion*i);
+                    float coordY = polig.getPoy() + radio * (float)Math.sin(seccion*i);
+                    //Establecemos las coordenadas de los vertices del poligono en el path
+                    path.lineTo(coordX, coordY); //
+                }
+                //Cerramos el path
+                path.close();
+                canvas.drawPath(path, brush);
             }
 
         }

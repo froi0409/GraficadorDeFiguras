@@ -29,10 +29,10 @@ parser code {:
         System.out.println("reporterror");
     }
     public void report_fatal_error(String message, Object info) {
-        System.out.println("reportfatal");
+        System.out.println("reportfatal " + info);
     }
-    public void syntax_error(Symbol cur_token) {
-        System.out.println("syntaxerr" + symbl_name_from_id(cur_token.sym));
+    public void syntax_error(Symbol s) {
+        System.out.println("Cadena inválida en la fila: " + (s.left) + " columna: " + s.right + " descripción: no se esperaba la expresión");
     }
 
     //Obtenemos las listas
@@ -62,23 +62,27 @@ instruccion ::= graficacion
                 | graficacion animacion
                 ;
 
-graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro {: graficaciones.add(new Circulo(v[0], v[1], v[2], colorF)); System.out.println("CIRCULO\n"); :}
-                | GRAFICAR CUADRADO reglaGraficacionCuatro {: graficaciones.add(new Cuadrado(v[0], v[1], v[2], colorF)); :}
-                | GRAFICAR RECTANGULO reglaGraficacionCinco {: graficaciones.add(new Rectangulo(v[0], v[1], v[2], v[3], colorF)); :}
-                | GRAFICAR LINEA reglaGraficacionCinco {: graficaciones.add(new Linea(v[0], v[1], v[2], v[3], colorF)); :}
-                | GRAFICAR POLIGONO reglaGraficacionSeis {: graficaciones.add(new Poligono(v[0], v[1], v[2], v[3], v[4], colorF)); :}
+graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro             {: graficaciones.add(new Circulo(v[0], v[1], v[2], colorF)); System.out.println("CIRCULO\n"); :}
+                | GRAFICAR CUADRADO reglaGraficacionCuatro          {: graficaciones.add(new Cuadrado(v[0], v[1], v[2], colorF)); :}
+                | GRAFICAR RECTANGULO reglaGraficacionCinco         {: graficaciones.add(new Rectangulo(v[0], v[1], v[2], v[3], colorF)); :}
+                | GRAFICAR LINEA reglaGraficacionCinco              {: graficaciones.add(new Linea(v[0], v[1], v[2], v[3], colorF)); :}
+                | GRAFICAR POLIGONO reglaGraficacionSeis            {: graficaciones.add(new Poligono(v[0], v[1], v[2], v[3], v[4], colorF)); :}         
                 ;
 
 reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); :}
+                                | error PARC
                                 ;
 
 reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); :}
+                                |error PARC
                                 ;
 
 reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); v[4]=v5.intValue(); :}
+                                | error {: System.out.println("Error en regla de graficación seis"); :} PARC
                                 ;
 
 animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
+                | error PARC
                 ;
 
 reglaAnimacion ::=  valor:v1 COM valor:v2 COM tipoAnimacion:animation {: 
@@ -103,5 +107,6 @@ valor::=    SIGMENOS valor:valo1                                  {: RESULT=valo
             | valor:valo1 SIGDIVISION          valor:valo2        {: RESULT=valo1/valo2; :}
             | NUMERO:valo1                                        {: RESULT= new Double(valo1); :}
             | PARA valor:valo1 PARC                               {: RESULT= new Double(valo1); :}
+            | error PARC
             ;
 
