@@ -348,7 +348,7 @@ public ArrayList<Token> getListaTokens() {
 public void agregarError(int linea, int columna) {
   if (cadenaLexica.length() > 0) {
     int column = columna - cadenaLexica.length();
-    listaErrores.add(new Advertencia(cadenaLexica, linea, column, "Léxico", "Simbolo no existente en el lenguaje"));
+    
     cadenaLexica="";
   }
 }
@@ -772,37 +772,37 @@ public void agregarError(int linea, int columna) {
             // fall through
           case 23: break;
           case 3:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("(", yyline+1, yycolumn+1)); return new Symbol(PARA, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("(", yyline+1, yycolumn+1)); return new Symbol(PARA, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 24: break;
           case 4:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(")", yyline+1, yycolumn+1)); return new Symbol(PARC, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(")", yyline+1, yycolumn+1)); return new Symbol(PARC, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 25: break;
           case 5:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("*", yyline+1, yycolumn+1)); return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("*", yyline+1, yycolumn+1)); return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 26: break;
           case 6:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("+", yyline+1, yycolumn+1)); return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("+", yyline+1, yycolumn+1)); return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 27: break;
           case 7:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(",", yyline+1, yycolumn+1));return new Symbol(COM, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(",", yyline+1, yycolumn+1)); return new Symbol(COM, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 28: break;
           case 8:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("-", yyline+1, yycolumn+1)); return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("-", yyline+1, yycolumn+1)); return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 29: break;
           case 9:
-            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("/", yyline+1, yycolumn+1)); return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("/", yyline+1, yycolumn+1)); return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 30: break;
@@ -822,37 +822,37 @@ public void agregarError(int linea, int columna) {
             // fall through
           case 33: break;
           case 13:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(LINEA, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(LINEA, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 34: break;
           case 14:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(ANIMAR, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(ANIMAR, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 35: break;
           case 15:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(OBJETO, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(OBJETO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 36: break;
           case 16:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(CIRCULO, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(CIRCULO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 37: break;
           case 17:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(ANTERIOR, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(ANTERIOR, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 38: break;
           case 18:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(CUADRADO, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(CUADRADO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 39: break;
           case 19:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 40: break;
@@ -862,7 +862,7 @@ public void agregarError(int linea, int columna) {
             // fall through
           case 41: break;
           case 21:
-            { agregarError(yyline+1,yycolumn+1); return new Symbol(RECTANGULO, yyline + 1, yycolumn + 1);
+            { agregarError(yyline+1,yycolumn+1); return new Symbol(RECTANGULO, yyline + 1, yycolumn + 1, yytext());
             }
             // fall through
           case 42: break;

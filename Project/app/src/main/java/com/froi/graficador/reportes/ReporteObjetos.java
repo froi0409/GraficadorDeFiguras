@@ -57,6 +57,11 @@ public class ReporteObjetos extends ReporteNormal {
         }
     }
 
+    /**
+     * Obtiene la cantidad de veces que se repite una figura
+     * @param cadena Nombre de la figura de la que se quiere averiguar la cantidad de repeticiones
+     * @return cantidad de veces que la figura ingresada se repite
+     */
     public String repeatObject(String cadena) {
         int cont = 0;
         String contador = "";

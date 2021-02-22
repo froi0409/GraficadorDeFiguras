@@ -103,6 +103,11 @@ public class ReporteColores extends ReporteNormal {
 
     }
 
+    /**
+     * Método que sirve para contar las veces que se repite un color
+     * @param cadena color del que se quiere saber las repeticiones
+     * @return Cantidad de veces que el color solicitado se repite
+     */
     private String repeatColor(String cadena) {
         int cont = 0;
         String contador = "";

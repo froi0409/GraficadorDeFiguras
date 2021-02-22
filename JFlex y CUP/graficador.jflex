@@ -40,7 +40,7 @@ public ArrayList<Token> getListaTokens() {
 public void agregarError(int linea, int columna) {
   if (cadenaLexica.length() > 0) {
     int column = columna - cadenaLexica.length();
-    
+    listaErrores.add(new Advertencia(cadenaLexica, linea, column, "   Léxico   ", "Simbolo no existente en el lenguaje"));
     cadenaLexica="";
   }
 }
@@ -59,24 +59,24 @@ Ignore = {TerminacionLinea} | [ \t\f]
 
 <YYINITIAL> {
 
-  "graficar"      { agregarError(yyline+1,yycolumn+1); return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1); }
-  "circulo"       { agregarError(yyline+1,yycolumn+1); return new Symbol(CIRCULO, yyline + 1, yycolumn + 1); }
-  "cuadrado"      { agregarError(yyline+1,yycolumn+1); return new Symbol(CUADRADO, yyline + 1, yycolumn + 1); }
-  "rectangulo"    { agregarError(yyline+1,yycolumn+1); return new Symbol(RECTANGULO, yyline + 1, yycolumn + 1); }
-  "linea"         { agregarError(yyline+1,yycolumn+1); return new Symbol(LINEA, yyline + 1, yycolumn + 1); }
-  "poligono"      { agregarError(yyline+1,yycolumn+1); return new Symbol(POLIGONO, yyline + 1, yycolumn + 1); }
-  "("             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("(", yyline+1, yycolumn+1)); return new Symbol(PARA, yyline + 1, yycolumn + 1); }
-  ")"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(")", yyline+1, yycolumn+1)); return new Symbol(PARC, yyline + 1, yycolumn + 1); }
-  ","             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(",", yyline+1, yycolumn+1));return new Symbol(COM, yyline + 1, yycolumn + 1); }
-  "animar"        { agregarError(yyline+1,yycolumn+1); return new Symbol(ANIMAR, yyline + 1, yycolumn + 1); }
-  "objeto"        { agregarError(yyline+1,yycolumn+1); return new Symbol(OBJETO, yyline + 1, yycolumn + 1); }
-  "anterior"      { agregarError(yyline+1,yycolumn+1); return new Symbol(ANTERIOR, yyline + 1, yycolumn + 1); }
+  "graficar"      { agregarError(yyline+1,yycolumn+1); return new Symbol(GRAFICAR, yyline + 1, yycolumn + 1, yytext()); }
+  "circulo"       { agregarError(yyline+1,yycolumn+1); return new Symbol(CIRCULO, yyline + 1, yycolumn + 1, yytext()); }
+  "cuadrado"      { agregarError(yyline+1,yycolumn+1); return new Symbol(CUADRADO, yyline + 1, yycolumn + 1, yytext()); }
+  "rectangulo"    { agregarError(yyline+1,yycolumn+1); return new Symbol(RECTANGULO, yyline + 1, yycolumn + 1, yytext()); }
+  "linea"         { agregarError(yyline+1,yycolumn+1); return new Symbol(LINEA, yyline + 1, yycolumn + 1, yytext()); }
+  "poligono"      { agregarError(yyline+1,yycolumn+1); return new Symbol(POLIGONO, yyline + 1, yycolumn + 1, yytext()); }
+  "("             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("(", yyline+1, yycolumn+1)); return new Symbol(PARA, yyline + 1, yycolumn + 1, yytext()); }
+  ")"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(")", yyline+1, yycolumn+1)); return new Symbol(PARC, yyline + 1, yycolumn + 1, yytext()); }
+  ","             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(",", yyline+1, yycolumn+1)); return new Symbol(COM, yyline + 1, yycolumn + 1, yytext()); }
+  "animar"        { agregarError(yyline+1,yycolumn+1); return new Symbol(ANIMAR, yyline + 1, yycolumn + 1, yytext()); }
+  "objeto"        { agregarError(yyline+1,yycolumn+1); return new Symbol(OBJETO, yyline + 1, yycolumn + 1, yytext()); }
+  "anterior"      { agregarError(yyline+1,yycolumn+1); return new Symbol(ANTERIOR, yyline + 1, yycolumn + 1, yytext()); }
   "curva"         { agregarError(yyline+1,yycolumn+1); return new Symbol(CURVA, yyline + 1, yycolumn + 1, yytext()); }
   {NUM}           { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token(yytext(), yyline+1, yycolumn+1)); return new Symbol(NUMERO, yyline + 1, yycolumn + 1, yytext()); }
-  "+"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("+", yyline+1, yycolumn+1)); return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1); }
-  "-"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("-", yyline+1, yycolumn+1)); return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1); }
-  "*"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("*", yyline+1, yycolumn+1)); return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1); }
-  "/"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("/", yyline+1, yycolumn+1)); return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1); }
+  "+"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("+", yyline+1, yycolumn+1)); return new Symbol(SIGSUMA, yyline + 1, yycolumn + 1, yytext()); }
+  "-"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("-", yyline+1, yycolumn+1)); return new Symbol(SIGMENOS, yyline + 1, yycolumn + 1, yytext()); }
+  "*"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("*", yyline+1, yycolumn+1)); return new Symbol(SIGMULTIPLICACION, yyline + 1, yycolumn + 1, yytext()); }
+  "/"             { agregarError(yyline+1,yycolumn+1); listaTokens.add(new Token("/", yyline+1, yycolumn+1)); return new Symbol(SIGDIVISION, yyline + 1, yycolumn + 1, yytext()); }
   "azul"          { agregarError(yyline+1,yycolumn+1); return new Symbol(COLOR, yyline + 1, yycolumn + 1, yytext()); }
   "rojo"          { agregarError(yyline+1,yycolumn+1); return new Symbol(COLOR, yyline + 1, yycolumn + 1, yytext()); }
   "verde"         { agregarError(yyline+1,yycolumn+1); return new Symbol(COLOR, yyline + 1, yycolumn + 1, yytext()); }

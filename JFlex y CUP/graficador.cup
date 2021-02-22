@@ -38,7 +38,7 @@ parser code {:
         realizarAnimacion = false;
         report_expected_token_ids();
         System.out.println("linea: " + s.left + "   columna: " + s.right);
-        Advertencia advert = new Advertencia(symbl_name_from_id(s.sym), s.left, s.right, "   Sintáctico   ", "error sintáctico");
+        Advertencia advert = new Advertencia((String)s.value, s.left, s.right, "   Sintáctico   ", "error sintáctico");
         
         listaErrores.add(advert);
         puntero = listaErrores.size()-1;
@@ -73,7 +73,7 @@ texto ::=   instruccion texto
             ;
 
 instruccion ::= graficacionInstruccion animacion
-                | error animacion                 {: listaErrores.get(puntero).setDescripcion("Se esperaba \"graficar\" o \"animar\""); :}
+                | error animacion                 {: listaErrores.get(puntero).setDescripcion("Se esperaba \"graficar <figura>\" o \"animar\""); :}
                 ;
 
 graficacionInstruccion ::=  GRAFICAR graficacion

@@ -235,7 +235,7 @@ public class parser extends lr_parser {
         realizarAnimacion = false;
         report_expected_token_ids();
         System.out.println("linea: " + s.left + "   columna: " + s.right);
-        Advertencia advert = new Advertencia(symbl_name_from_id(s.sym), s.left, s.right, "   Sintáctico   ", "error sintáctico");
+        Advertencia advert = new Advertencia((String)s.value, s.left, s.right, "   Sintáctico   ", "error sintáctico");
         
         listaErrores.add(advert);
         puntero = listaErrores.size()-1;
@@ -322,7 +322,7 @@ class CUP$parser$actions {
           case 4: // instruccion ::= error animacion 
             {
               Object RESULT =null;
-		 listaErrores.get(puntero).setDescripcion("Se esperaba \"graficar\" o \"animar\""); 
+		 listaErrores.get(puntero).setDescripcion("Se esperaba \"graficar <figura>\" o \"animar\""); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -19,6 +19,11 @@ public class ReporteErrores {
         this.listaErrores = listaErrores;
     }
 
+    /**
+     * Crea el reporte de los errores léxicos y sintácticos que fueron encontrados durante la ejecución
+     * @param tabla Tabla en la que se colocaran los datos
+     * @param context Contexto en el que se colocara la tabla
+     */
     public void hacerReporte(TableLayout tabla, Context context) {
         tabla.setStretchAllColumns(true);
         tabla.bringToFront();
