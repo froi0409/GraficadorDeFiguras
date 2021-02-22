@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception ex) {
             System.out.println("error IRRECUPERABLE: " + ex.getMessage());
+            ex.printStackTrace();
         }
 
 

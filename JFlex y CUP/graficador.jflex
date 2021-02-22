@@ -40,7 +40,7 @@ public ArrayList<Token> getListaTokens() {
 public void agregarError(int linea, int columna) {
   if (cadenaLexica.length() > 0) {
     int column = columna - cadenaLexica.length();
-    listaErrores.add(new Advertencia(cadenaLexica, linea, column, "Léxico", "Simbolo no existente en el lenguaje"));
+    
     cadenaLexica="";
   }
 }

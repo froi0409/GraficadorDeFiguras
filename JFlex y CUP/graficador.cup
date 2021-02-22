@@ -11,6 +11,8 @@ parser code {:
     private ArrayList<Advertencia> listaErrores;
     private String colorF;
     private int[] v;
+    private int puntero = 0;
+    private boolean realizarAnimacion = true;
 
     public parser(GraficadorLex lex, ArrayList<Advertencia> listaErrores) {
         super(lex);
@@ -31,9 +33,21 @@ parser code {:
     public void report_fatal_error(String message, Object info) {
         System.out.println("reportfatal " + info);
     }
+    @Override
     public void syntax_error(Symbol s) {
-        System.out.println("Cadena inválida en la fila: " + (s.left) + " columna: " + s.right + " descripción: no se esperaba la expresión");
+        realizarAnimacion = false;
+        report_expected_token_ids();
+        System.out.println("linea: " + s.left + "   columna: " + s.right);
+        Advertencia advert = new Advertencia(symbl_name_from_id(s.sym), s.left, s.right, "   Sintáctico   ", "error sintáctico");
+        
+        listaErrores.add(advert);
+        puntero = listaErrores.size()-1;
     }
+    protected int error_sync_size() {
+        return 1;
+    }
+
+// graficar cuadrado(0++,200,300,morado)
 
     //Obtenemos las listas
     public ArrayList<Figura> getGraficaciones() {
@@ -43,7 +57,7 @@ parser code {:
 :}
 
 terminal String GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, PARA, PARC, COM, ANIMAR, OBJETO, ANTERIOR, CURVA, NUMERO, SIGSUMA, SIGMENOS, SIGMULTIPLICACION, SIGDIVISION, COLOR, UNARY;
-non terminal texto, instruccion, graficacion, animacion, reglaAnimacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis;
+non terminal texto, instruccion, graficacion, animacion, reglaAnimacion, reglaGraficacionCuatro, reglaGraficacionCinco, reglaGraficacionSeis, graficacionInstruccion;
 non terminal Double valor;
 non terminal String tipoAnimacion;
 
@@ -58,46 +72,55 @@ texto ::=   instruccion texto
             |
             ;
 
-instruccion ::= graficacion
-                | graficacion animacion
+instruccion ::= graficacionInstruccion animacion
+                | error animacion                 {: listaErrores.get(puntero).setDescripcion("Se esperaba \"graficar\" o \"animar\""); :}
                 ;
 
-graficacion ::= GRAFICAR CIRCULO reglaGraficacionCuatro             {: graficaciones.add(new Circulo(v[0], v[1], v[2], colorF)); System.out.println("CIRCULO\n"); :}
-                | GRAFICAR CUADRADO reglaGraficacionCuatro          {: graficaciones.add(new Cuadrado(v[0], v[1], v[2], colorF)); :}
-                | GRAFICAR RECTANGULO reglaGraficacionCinco         {: graficaciones.add(new Rectangulo(v[0], v[1], v[2], v[3], colorF)); :}
-                | GRAFICAR LINEA reglaGraficacionCinco              {: graficaciones.add(new Linea(v[0], v[1], v[2], v[3], colorF)); :}
-                | GRAFICAR POLIGONO reglaGraficacionSeis            {: graficaciones.add(new Poligono(v[0], v[1], v[2], v[3], v[4], colorF)); :}         
+graficacionInstruccion ::=  GRAFICAR graficacion
+                            ;
+
+
+graficacion ::= CIRCULO reglaGraficacionCuatro                  {: graficaciones.add(new Circulo(v[0], v[1], v[2], colorF)); System.out.println("CIRCULO\n"); :}
+                | CUADRADO reglaGraficacionCuatro               {: graficaciones.add(new Cuadrado(v[0], v[1], v[2], colorF)); :}
+                | RECTANGULO reglaGraficacionCinco              {: graficaciones.add(new Rectangulo(v[0], v[1], v[2], v[3], colorF)); :}
+                | LINEA reglaGraficacionCinco                   {: graficaciones.add(new Linea(v[0], v[1], v[2], v[3], colorF)); :}
+                | POLIGONO reglaGraficacionSeis                 {: graficaciones.add(new Poligono(v[0], v[1], v[2], v[3], v[4], colorF)); :}         
+                | CIRCULO error                                 {: listaErrores.get(puntero).setDescripcion("Error en alguno de los parametros del circulo"); System.out.println(listaErrores.get(puntero)); :}
+                | CUADRADO error                                {: listaErrores.get(puntero).setDescripcion("Error en alguno de los parametros del cuadrado"); :}
+                | RECTANGULO error                              {: listaErrores.get(puntero).setDescripcion("Error en alguno de los parametros del rectangulo"); :}
+                | LINEA error                                   {: listaErrores.get(puntero).setDescripcion("Error en alguno de los parametros de la linea"); :}
+                | POLIGONO error                                {: listaErrores.get(puntero).setDescripcion("Error en alguno de los parametros del poligono"); :}
                 ;
 
 reglaGraficacionCuatro ::=      PARA valor:v1 COM valor:v2 COM valor:v3 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); :}
-                                | error PARC
                                 ;
 
 reglaGraficacionCinco ::=       PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); :}
-                                |error PARC
                                 ;
 
 reglaGraficacionSeis ::=        PARA valor:v1 COM valor:v2 COM valor:v3 COM valor:v4 COM valor:v5 COM COLOR:nomColor PARC {: colorF = (String)nomColor; v[0]=v1.intValue(); v[1]=v2.intValue(); v[2]=v3.intValue(); v[3]=v4.intValue(); v[4]=v5.intValue(); :}
-                                | error {: System.out.println("Error en regla de graficación seis"); :} PARC
                                 ;
 
-animacion ::=   ANIMAR OBJETO ANTERIOR PARA reglaAnimacion PARC
-                | error PARC
+animacion ::=   ANIMAR OBJETO ANTERIOR reglaAnimacion
+                |
+                | ANIMAR error                                   {: listaErrores.get(puntero).setDescripcion("Error en la instruccion de animacion"); :}
                 ;
 
-reglaAnimacion ::=  valor:v1 COM valor:v2 COM tipoAnimacion:animation {: 
-                                                                int lastElement = graficaciones.size()-1;
-                                                                Figura figure = graficaciones.get(lastElement);
-                                                                figure.setAnimacion(true);
-                                                                figure.setPax(v1.intValue());
-                                                                figure.setPay(v2.intValue());
-                                                                figure.setTipoAnimacion(animation.toString());
-                                                                System.out.println("\n\n\nAnimacion en : " + figure.getPax() + "  " + figure.getPay() + "   " + figure.getTipoAnimacion() + "\n" + "Objeto a animar: " + figure + "\n\n\n");
+reglaAnimacion ::=  PARA valor:v1 COM valor:v2 COM tipoAnimacion:animation PARC {: 
+                                                                if(realizarAnimacion) {
+                                                                    int lastElement = graficaciones.size()-1;
+                                                                    Figura figure = graficaciones.get(lastElement);
+                                                                    figure.setAnimacion(true);
+                                                                    figure.setPax(v1.intValue());
+                                                                    figure.setPay(v2.intValue());
+                                                                    figure.setTipoAnimacion(animation.toString());
+                                                                    System.out.println("\n\n\nAnimacion en : " + figure.getPax() + "  " + figure.getPay() + "   " + figure.getTipoAnimacion() + "\n" + "Objeto a animar: " + figure + "\n\n\n");    
+                                                                }
                                                             :}
                     ;
 
-tipoAnimacion ::=   LINEA       {: RESULT="linea"; System.out.println("Se encontró animación con linea"); :}
-                    | CURVA     {: RESULT="curva"; :}
+tipoAnimacion ::=   LINEA                   {: RESULT="linea"; :}
+                    | CURVA                 {: RESULT="curva"; :}
                     ;
 
 valor::=    SIGMENOS valor:valo1                                  {: RESULT=valo1*-1; :}%prec UNARY
@@ -107,6 +130,5 @@ valor::=    SIGMENOS valor:valo1                                  {: RESULT=valo
             | valor:valo1 SIGDIVISION          valor:valo2        {: RESULT=valo1/valo2; :}
             | NUMERO:valo1                                        {: RESULT= new Double(valo1); :}
             | PARA valor:valo1 PARC                               {: RESULT= new Double(valo1); :}
-            | error PARC
             ;
-
+            

@@ -83,6 +83,11 @@ public class Lienzo extends View {
 
     }
 
+    /**
+     * Sirve para dar color al pincel que utilizaremos para colorear la figura
+     * @param brush Paint que representa el pincel que se utilizará para colorear la figura
+     * @param color Color del que queremos pintar la figura
+     */
     private void setBrushColor(Paint brush, String color) {
         switch(color) {
             case "azul":

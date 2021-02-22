@@ -41,4 +41,8 @@ public class Advertencia implements Serializable {
     public String getDescripcion() {
         return descripcion;
     }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 }

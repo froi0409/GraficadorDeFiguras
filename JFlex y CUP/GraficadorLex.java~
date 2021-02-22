@@ -350,6 +350,7 @@ public void agregarError(int linea, int columna) {
     int column = columna - cadenaLexica.length();
     listaErrores.add(new Advertencia(cadenaLexica, linea, column, "Léxico", "Simbolo no existente en el lenguaje"));
     cadenaLexica="";
+  }
 }
 
 

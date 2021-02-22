@@ -58,6 +58,11 @@ public class ReporteAnimaciones extends ReporteNormal {
 
     }
 
+    /**
+     * Cuenta las veces que se devería realizar una animaciṕn de cierto tipo
+     * @param cadena Tipo de animación de la que se quiere llevar una cuenta
+     * @return String que contiene en formato numérico la cantidad de veces que se ha reprtido la animación
+     */
     public String repeatAnimation(String cadena) {
         int cont = 0;
         String contador = "";
